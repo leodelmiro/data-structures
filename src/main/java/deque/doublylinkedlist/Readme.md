@@ -1,0 +1,1 @@
+![Deque using doubly linked list](deque.png)
