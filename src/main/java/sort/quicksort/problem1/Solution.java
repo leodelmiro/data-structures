@@ -1,4 +1,4 @@
-package sort.quicksort;
+package sort.quicksort.problem1;
 
 import java.util.List;
 
