@@ -25,7 +25,7 @@ class Solution {
         Pair pivot = pairs.get(end);
         int positionPivot = start;
 
-        for(int i = start; i <= end; i++) {
+        for(int i = start; i <= end - 1; i++) {
             if(pivot.key > pairs.get(i).key) {
                 Pair temp = pairs.get(positionPivot);
                 pairs.set(positionPivot, pairs.get(i));
