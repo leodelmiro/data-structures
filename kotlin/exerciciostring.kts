@@ -37,8 +37,8 @@ println(validatePassword("amrca154682"))
 println("----------------------------")
 
 fun validAnagram(s: String, t: String): Boolean {
-    val counter = mutableMapOf<Char ,Int >()
-    if (s.isEmpty() || t.isEmpty() ) return false
+    val counter = mutableMapOf<Char, Int>()
+    if (s.isEmpty() || t.isEmpty()) return false
 
     s.forEach {
         counter[it] = counter.getOrDefault(it, 0) + 1
@@ -57,4 +57,39 @@ fun validAnagram(s: String, t: String): Boolean {
 println(validAnagram("anagram", "nagaram"))
 println(validAnagram("rat", "car"))
 println("----------------------------")
+
+// LongestPrefix Analisando todos os elementos, O (n * m)
+fun longestCommonPrefixAnalisandoTodos(strs: Array<String>): String {
+    if (strs.isEmpty()) return ""
+    if (strs.size == 1) return strs[0]
+    var longestPrefix = strs[0]
+    for (i in 1 until strs.size) {
+        if (longestPrefix.isEmpty()) return ""
+        while (!strs[i].startsWith(longestPrefix)) {
+            longestPrefix = longestPrefix.dropLast(1)
+        }
+    }
+    return longestPrefix
+}
+
+// LongestPrefix e Ordenando Analisando primeiro e ultimo apenas e usando substring para nao criar toda hora uma nova string igual com dropLast, O(n log n + m)
+fun longestCommonPrefix(strs: Array<String>): String {
+    if (strs.isEmpty()) return ""
+    if (strs.size == 1) return strs[0]
+    strs.sort()
+    val longestPrefix = strs[0]
+    val lastElement = strs[strs.size - 1]
+    var i = 0
+
+    while (i < longestPrefix.length && i < lastElement.length && longestPrefix[i] == lastElement[i]) {
+        i++
+    }
+
+    return longestPrefix.substring(0, i)
+}
+
+println(longestCommonPrefix(arrayOf("flowers", "flow", "flight")))
+println(longestCommonPrefix(arrayOf("dog", "racecar", "car")))
+println("----------------------------")
+
 
