@@ -1,3 +1,5 @@
+import kotlin.math.abs
+
 fun removeNonDigits(input: String): String {
     return input.replace(Regex("\\D"), "")
 }
@@ -92,4 +94,62 @@ println(longestCommonPrefix(arrayOf("flowers", "flow", "flight")))
 println(longestCommonPrefix(arrayOf("dog", "racecar", "car")))
 println("----------------------------")
 
+
+// Usando Set O(n²)
+fun invalidTransactionSet(transactions: Array<String>): List<String> {
+    val invalidTransactions = mutableSetOf<String>()
+
+    for (i in transactions.indices) {
+        val (nameI, timeI, amountI, cityI) = transactions[i].split(",")
+        val amountDigit = amountI.toInt()
+
+        if (amountDigit > 1000) invalidTransactions.add(transactions[i])
+        val timeDigitI = timeI.toInt()
+
+        for (j in i+1 until transactions.size) {
+            val (nameJ, timeJ, _, cityJ) = transactions[j].split(",")
+            val timeDigitj = timeJ.toInt()
+            if (nameI == nameJ && (abs(timeDigitI - timeDigitj) <= 60) && cityI != cityJ) {
+                invalidTransactions.add(transactions[j])
+                invalidTransactions.add(transactions[i])
+            }
+        }
+    }
+
+    return invalidTransactions.toList()
+}
+
+// Usando List O(n²)
+fun invalidTransaction(transactions: Array<String>): List<String> {
+    val result = mutableListOf<String>()
+    val invalidTransactions = MutableList(transactions.size) { false }
+
+    for (i in transactions.indices) {
+        val (nameI, timeI, amountI, cityI) = transactions[i].split(",")
+        val amountDigit = amountI.toInt()
+
+        if (amountDigit > 1000) invalidTransactions[i] = true
+        val timeDigitI = timeI.toInt()
+
+        for (j in i+1 until transactions.size) {
+            val (nameJ, timeJ, _, cityJ) = transactions[j].split(",")
+            val timeDigitj = timeJ.toInt()
+            if (nameI == nameJ && (abs(timeDigitI - timeDigitj) <= 60) && cityI != cityJ) {
+                invalidTransactions[i] = true
+                invalidTransactions[j] = true
+            }
+        }
+    }
+
+    for (i in transactions.indices) {
+        if (invalidTransactions[i]) result.add(transactions[i])
+    }
+
+    return result
+}
+
+println(invalidTransaction(arrayOf("alice,20,800,mtv","alice,50,100,beijing")))
+println(invalidTransaction(arrayOf("alice,20,800,mtv","alice,50,1200,mtv")))
+println(invalidTransaction(arrayOf("alice,20,800,mtv","bob,50,1200,mtv")))
+println("----------------------------")
 
