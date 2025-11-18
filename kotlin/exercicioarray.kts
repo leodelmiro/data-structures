@@ -46,3 +46,18 @@ fun findNumbers(nums: IntArray): Int {
 println(findNumbers(intArrayOf(12,345,2,6,7896)))
 println(findNumbers(intArrayOf(555,901,482,1771)))
 println("----------------------------")
+
+fun sortedSquares(nums: IntArray): IntArray {
+    val result = nums.copyOf()
+    for(i in nums.indices) {
+        result[i] = nums[i] * nums[i]
+    }
+
+    result.sort()
+
+    return result
+}
+
+println(sortedSquares(intArrayOf(-4,-1,0,3,10)))
+println(sortedSquares(intArrayOf(-7,-3,2,3,11)))
+println("----------------------------")
