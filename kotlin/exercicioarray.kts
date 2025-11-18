@@ -31,3 +31,18 @@ println(dotProductTwoArrays(intArrayOf(1,0,0,2,3), intArrayOf(0,3,0,4,0)))
 println(dotProductTwoArrays(intArrayOf(0,1,0,0,0), intArrayOf(0,0,0,0,0)))
 println(dotProductTwoArrays(intArrayOf(0,1,0,0,2,0,0), intArrayOf(1,0,0,0,3,0,4)))
 println("----------------------------")
+
+fun findNumbers(nums: IntArray): Int {
+    var result = 0
+
+    for (num in nums) {
+        val numLength = num.toString().length
+        if(numLength % 2 == 0) result++
+    }
+
+    return result
+}
+
+println(findNumbers(intArrayOf(12,345,2,6,7896)))
+println(findNumbers(intArrayOf(555,901,482,1771)))
+println("----------------------------")
