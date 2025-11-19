@@ -1,10 +1,10 @@
 fun findMaxConsecutiveOnes(nums: IntArray): Int {
     var maxCounter = 0
     var currentCounter = 0
-    for(num in nums) {
-        if(num == 1) {
+    for (num in nums) {
+        if (num == 1) {
             currentCounter++
-            if(currentCounter > maxCounter) maxCounter = currentCounter
+            if (currentCounter > maxCounter) maxCounter = currentCounter
             continue
         }
 
@@ -14,22 +14,22 @@ fun findMaxConsecutiveOnes(nums: IntArray): Int {
     return maxCounter
 }
 
-println(findMaxConsecutiveOnes(intArrayOf(1,1,0,1,1,1)))
-println(findMaxConsecutiveOnes(intArrayOf(1,0,1,1,0,1)))
+println(findMaxConsecutiveOnes(intArrayOf(1, 1, 0, 1, 1, 1)))
+println(findMaxConsecutiveOnes(intArrayOf(1, 0, 1, 1, 0, 1)))
 println("----------------------------")
 
 fun dotProductTwoArrays(nums1: IntArray, nums2: IntArray): Int {
     var total = 0
-    for(i in nums1.indices) {
+    for (i in nums1.indices) {
         total += nums1[i] * nums2[i]
     }
 
     return total
 }
 
-println(dotProductTwoArrays(intArrayOf(1,0,0,2,3), intArrayOf(0,3,0,4,0)))
-println(dotProductTwoArrays(intArrayOf(0,1,0,0,0), intArrayOf(0,0,0,0,0)))
-println(dotProductTwoArrays(intArrayOf(0,1,0,0,2,0,0), intArrayOf(1,0,0,0,3,0,4)))
+println(dotProductTwoArrays(intArrayOf(1, 0, 0, 2, 3), intArrayOf(0, 3, 0, 4, 0)))
+println(dotProductTwoArrays(intArrayOf(0, 1, 0, 0, 0), intArrayOf(0, 0, 0, 0, 0)))
+println(dotProductTwoArrays(intArrayOf(0, 1, 0, 0, 2, 0, 0), intArrayOf(1, 0, 0, 0, 3, 0, 4)))
 println("----------------------------")
 
 fun findNumbers(nums: IntArray): Int {
@@ -37,19 +37,19 @@ fun findNumbers(nums: IntArray): Int {
 
     for (num in nums) {
         val numLength = num.toString().length
-        if(numLength % 2 == 0) result++
+        if (numLength % 2 == 0) result++
     }
 
     return result
 }
 
-println(findNumbers(intArrayOf(12,345,2,6,7896)))
-println(findNumbers(intArrayOf(555,901,482,1771)))
+println(findNumbers(intArrayOf(12, 345, 2, 6, 7896)))
+println(findNumbers(intArrayOf(555, 901, 482, 1771)))
 println("----------------------------")
 
 fun sortedSquares(nums: IntArray): IntArray {
     val result = nums.copyOf()
-    for(i in nums.indices) {
+    for (i in nums.indices) {
         result[i] = nums[i] * nums[i]
     }
 
@@ -58,8 +58,8 @@ fun sortedSquares(nums: IntArray): IntArray {
     return result
 }
 
-println(sortedSquares(intArrayOf(-4,-1,0,3,10)))
-println(sortedSquares(intArrayOf(-7,-3,2,3,11)))
+println(sortedSquares(intArrayOf(-4, -1, 0, 3, 10)))
+println(sortedSquares(intArrayOf(-7, -3, 2, 3, 11)))
 println("----------------------------")
 
 fun duplicateZeros(arr: IntArray) {
@@ -80,10 +80,30 @@ fun duplicateZeros(arr: IntArray) {
     }
 }
 
-val example1 = intArrayOf(1,0,2,3,0,4,5,0)
-val example2 = intArrayOf(1,2,3)
+val example1 = intArrayOf(1, 0, 2, 3, 0, 4, 5, 0)
+val example2 = intArrayOf(1, 2, 3)
 println(duplicateZeros(example1))
-println(example1.joinToString { "," })
 println(duplicateZeros(example2))
-println(example2.joinToString { "," })
 println("----------------------------")
+
+fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int): Unit {
+    var rightPointer = m - 1
+    var leftPointer = n - 1
+    var mergedPointer = m + n - 1
+    while (leftPointer >= 0) {
+        if (rightPointer >= 0 && nums1[rightPointer] >= nums2[leftPointer]) {
+            nums1[mergedPointer] = nums1[rightPointer]
+            mergedPointer--
+            rightPointer--
+            continue
+        }
+        nums1[mergedPointer] = nums2[leftPointer]
+        mergedPointer--
+        leftPointer--
+    }
+}
+
+
+val example1Merge = intArrayOf(1, 2, 3, 0, 0, 0)
+val example2Merge = intArrayOf(2, 5, 6)
+println(merge(example1Merge, 3, example2Merge, 3))
