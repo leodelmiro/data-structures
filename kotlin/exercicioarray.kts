@@ -107,3 +107,19 @@ fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int): Unit {
 val example1Merge = intArrayOf(1, 2, 3, 0, 0, 0)
 val example2Merge = intArrayOf(2, 5, 6)
 println(merge(example1Merge, 3, example2Merge, 3))
+println("----------------------------")
+
+fun containsDuplicate(nums: IntArray): Boolean {
+    val alreadyHere = mutableSetOf<Int>()
+
+    nums.forEach {
+        if (alreadyHere.contains(it)) return true
+        alreadyHere.add(it)
+    }
+
+    return false
+}
+
+println(containsDuplicate(intArrayOf(1, 2, 3, 1)))
+println(containsDuplicate(intArrayOf(1, 2, 3, 4)))
+println(containsDuplicate(intArrayOf(1, 1, 1, 3, 3, 4, 3, 2, 4, 2)))
