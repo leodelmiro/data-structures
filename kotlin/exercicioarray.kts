@@ -61,3 +61,29 @@ fun sortedSquares(nums: IntArray): IntArray {
 println(sortedSquares(intArrayOf(-4,-1,0,3,10)))
 println(sortedSquares(intArrayOf(-7,-3,2,3,11)))
 println("----------------------------")
+
+fun duplicateZeros(arr: IntArray) {
+    var i = 0
+
+    while (i < arr.size - 1) {
+        if (arr[i] == 0) {
+            // shift de trás pra frente
+            for (j in arr.size - 1 downTo i + 1) {
+                arr[j] = arr[j - 1]
+            }
+            // duplicar zero
+            arr[i + 1] = 0
+            i += 2 // pula o zero duplicado
+        } else {
+            i++
+        }
+    }
+}
+
+val example1 = intArrayOf(1,0,2,3,0,4,5,0)
+val example2 = intArrayOf(1,2,3)
+println(duplicateZeros(example1))
+println(example1.joinToString { "," })
+println(duplicateZeros(example2))
+println(example2.joinToString { "," })
+println("----------------------------")
