@@ -77,3 +77,19 @@ console.log(fibonacciComRecursividadeDeCauda(3))
 console.log(fibonacciComRecursividadeDeCauda(4))
 console.log(fibonacciComRecursividadeDeCauda(5))
 console.log(fibonacciComRecursividadeDeCauda(6))
+
+
+function reverse(list) {
+    if (list.length <= 1) {
+        return list
+    }
+
+    const head = list[0]
+    const tail = list.slice(1)
+
+    return reverse(tail).concat(head)
+}
+
+console.log(reverse([]))
+console.log(reverse(["azul"]))
+console.log(reverse(["rosa", "preto", "verde", "azul"]))
