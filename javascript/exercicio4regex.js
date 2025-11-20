@@ -43,3 +43,15 @@ function formatDate(day, month, year) {
 }
 
 console.log(formatDate(dateFormatted.dia, dateFormatted.mes, dateFormatted.ano))
+
+function validatePassword(password) {
+    if (password.length < 8) return false
+    if (!(/[a-zA-Z]+/).test(password)) return false
+    if (!(/[0-9]+/).test(password)) return false
+    if (!(/[@#&]+/).test(password)) return false
+
+    return true
+}
+
+console.log(validatePassword("amerca1@"))
+console.log(validatePassword("amrca154682"))

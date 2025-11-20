@@ -32,3 +32,15 @@ const input = [
         "amount": 12000.0
     }
 ]
+
+function findMaxSellerAmount(sellers) {
+    let topSeller = sellers[0]
+
+    for (let i = 1; i < sellers.length; i++ ) {
+        if(sellers[i].amount > topSeller.amount) topSeller = sellers[i]
+    }
+
+    return topSeller
+}
+
+console.log(findMaxSellerAmount(input))
