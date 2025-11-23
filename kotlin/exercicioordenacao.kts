@@ -1,5 +1,6 @@
 // Bubble Sort
 // Complexidade O (n²)
+// Complexidade espaço O(1)
 
 fun bubbleSort(nums: IntArray): IntArray {
     for (i in nums.indices) {
@@ -20,6 +21,7 @@ println(bubbleSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc
 
 // Bubble Sort Otimizado
 // Complexidade O (n²)
+// Complexidade espaço O(1)
 
 fun bubbleSortOtimizado(nums: IntArray): IntArray {
     for (i in nums.indices) {
@@ -40,3 +42,31 @@ fun bubbleSortOtimizado(nums: IntArray): IntArray {
 
 println(bubbleSortOtimizado(intArrayOf(20, 9, 86, -2, 16)).map { it.toString() }.reduce { acc, it -> "$acc, $it"})
 println(bubbleSortOtimizado(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc, it -> "$acc, $it"})
+
+
+// Selection Sort
+// Complexidade tempo O(n²)
+// Complexidade espaço O(1)
+
+fun selectionSort(nums: IntArray): IntArray {
+    for (i in nums.indices) {
+        var minIndex = i
+
+        for (j in i + 1 until nums.size) {
+            if (nums[j] < nums[minIndex]) {
+                minIndex = j
+            }
+        }
+
+        if (minIndex != i) {
+            val aux = nums[i]
+            nums[i] = nums[minIndex]
+            nums[minIndex] = aux
+        }
+    }
+
+    return nums
+}
+
+println(selectionSort(intArrayOf(20, 9, 86, -2, 16)).map { it.toString() }.reduce { acc, it -> "$acc, $it"})
+println(selectionSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc, it -> "$acc, $it"})
