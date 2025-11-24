@@ -94,3 +94,56 @@ fun insertionSort(nums: IntArray): IntArray {
 
 println(insertionSort(intArrayOf(20, 9, 86, -2, 16)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
 println(insertionSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
+
+// Merge Sort
+// Um dos mais usados
+// Complexidade tempo O(n log n)
+// Complexidade espaço O(n)
+// Separa os algoritmos em arrays menores e depois faz o merge, em cada merge é feito a ordenação
+
+fun mergeSort(nums: IntArray, left: Int = 0, right: Int = nums.lastIndex): IntArray {
+    if (left >= right) return nums
+
+    val middle = (left + right) / 2
+    mergeSort(nums, left, middle)
+    mergeSort(nums, middle + 1, right)
+    merge(nums, left, middle, right)
+
+    return nums
+}
+
+fun merge(nums: IntArray, left: Int, middle: Int, right: Int) {
+    val length = right - left + 1
+    val result = IntArray(length)
+
+    var i = left        // ponteiro da metade esquerda
+    var j = middle + 1  // ponteiro da metade direita
+    var k = 0           // ponteiro do array auxiliar
+
+    // merge das duas metades
+    while (i <= middle && j <= right) {
+        if (nums[i] <= nums[j]) {
+            result[k++] = nums[i++]
+        } else {
+            result[k++] = nums[j++]
+        }
+    }
+
+    // copia o resto da esquerda (se sobrar)
+    while (i <= middle) {
+        result[k++] = nums[i++]
+    }
+
+    // copia o resto da direita (se sobrar)
+    while (j <= right) {
+        result[k++] = nums[j++]
+    }
+
+    // copia de volta para o array original
+    for (indice in 0 until length) {
+        nums[left + indice] = result[indice]
+    }
+}
+
+println(mergeSort(intArrayOf(20, 9, 86, -2, 16)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
+println(mergeSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
