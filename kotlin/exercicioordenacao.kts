@@ -4,7 +4,7 @@
 
 fun bubbleSort(nums: IntArray): IntArray {
     for (i in nums.indices) {
-        for (j in 0 until nums.size - 1) {
+        for (j in 0 until nums.size - 1 - i) {
             if (nums[j] > nums[j + 1]) {
                 val aux = nums[j]
                 nums[j] = nums[j + 1]
@@ -26,7 +26,7 @@ println(bubbleSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc
 fun bubbleSortOtimizado(nums: IntArray): IntArray {
     for (i in nums.indices) {
         var swapped = false
-        for (j in 0 until nums.size - 1) {
+        for (j in 0 until nums.size - 1 - i) {
             if (nums[j] > nums[j + 1]) {
                 val aux = nums[j]
                 nums[j] = nums[j + 1]
