@@ -147,3 +147,46 @@ fun merge(nums: IntArray, left: Int, middle: Int, right: Int) {
 
 println(mergeSort(intArrayOf(20, 9, 86, -2, 16)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
 println(mergeSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
+
+// Quick Sort
+// Muitas das linguagens o implementam por padrão
+// Complexidade tempo médio e melhor O(n log n), Pior caso quando pivot não tão bom O(n²)
+// Complexidade espaço O(n)
+// Separa os algoritmos em arrays menores e depois faz o merge, em cada merge é feito a ordenação
+
+fun quickSort(nums: IntArray, left: Int = 0, right: Int = nums.lastIndex): IntArray {
+    // Se não menor é porque só tem um elemento
+    if (left < right) {
+        val pivot = partition(nums, left, right)
+        quickSort(nums, left, pivot - 1)
+        quickSort(nums, pivot + 1, right)
+    }
+
+    return nums
+}
+
+fun partition(nums: IntArray, left: Int, right: Int): Int {
+    val pivot = nums[right]
+    var i = left
+
+    for (j in left until right) {
+        // Coloca os menores sempre a esquerda e anda com o ponteiro da posição do pivot
+        if (nums[j] <= pivot) {
+            val aux = nums[j]
+            nums[j] = nums[i]
+            nums[i] = aux
+            i++
+        }
+    }
+
+    val aux = nums[right]
+    nums[right] = nums[i]
+    nums[i] = aux
+    return i
+}
+
+
+println(quickSort(intArrayOf(20, 9, 86, -2, 16)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
+println(quickSort(intArrayOf(5, 4, 3, 2, 1)).map { it.toString() }.reduce { acc, it -> "$acc, $it" })
+
+
