@@ -63,3 +63,19 @@ class Solution2 {
         return sandwiches.size - i
     }
 }
+
+class Solution3 {
+    fun countStudents(students: IntArray, sandwiches: IntArray): Int {
+        var circleStudentCount = students.filter { it == 0 }.size
+        var squareStudentCount = students.filter { it == 1 }.size
+
+        for (sandwiche in sandwiches) {
+            when(sandwiche) {
+                0 -> if (circleStudentCount > 0) circleStudentCount-- else break
+                1 -> if (squareStudentCount > 0) squareStudentCount-- else break
+            }
+        }
+
+        return circleStudentCount + squareStudentCount
+    }
+}
