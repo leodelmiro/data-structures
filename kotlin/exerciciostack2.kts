@@ -18,6 +18,8 @@ class StackWithList(
     fun count() = itens.size
 
     fun peek(): String = itens.peek()
+
+    fun clear() = itens.clear() // Poderia passar uma nova lista vazia
 }
 
 val stackWithList = StackWithList()

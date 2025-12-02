@@ -22,7 +22,14 @@ class StackWithArray(
 
     fun count() = top + 1
 
-    fun peek() = itens[top]
+    fun peek() {
+        if (this.isEmpty()) throw IllegalStateException("A Pilha está vazia")
+        itens[top]
+    }
+
+    fun clear() {
+        this.top = -1
+    }
 }
 
 val stackWithArray = StackWithArray()
@@ -37,3 +44,5 @@ stackWithArray.push("Saul")
 stackWithArray.push("Goodman")
 println(stackWithArray.count())
 println(stackWithArray.peek())
+stackWithArray.clear()
+println(stackWithArray.count())
