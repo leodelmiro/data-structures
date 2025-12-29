@@ -1,3 +1,5 @@
+import kotlin.math.abs
+
 fun minimumCoins(value: Int, coins: IntArray): Int {
     coins.sortDescending()
     var currentValue = value
@@ -46,3 +48,38 @@ println(
         )
     )
 )
+
+fun minimumImbalance(jailNumbers: Int, weight: IntArray): Int {
+    var meanValue = 0
+    var animals = weight
+    for (i in weight.indices) {
+        meanValue += weight[i]
+    }
+    meanValue /= jailNumbers
+
+    if (weight.size < jailNumbers * 2) {
+        val fictionalAnimalToADD = (jailNumbers * 2) - weight.size
+
+        animals = weight.copyOf(weight.size + fictionalAnimalToADD)
+    }
+
+    animals.sort()
+
+    val chambers = Array(jailNumbers) { IntArray(2) }
+    for (i in 0 until jailNumbers) {
+        chambers[i] = intArrayOf(animals[i], animals[animals.size - i - 1])
+    }
+
+    var imbalance = 0
+    for (i in chambers.indices) {
+        var totalWeight = 0
+        for (j in chambers[i].indices) {
+            totalWeight += chambers[i][j]
+        }
+        imbalance += abs(totalWeight - meanValue)
+    }
+
+    return imbalance
+}
+
+println(minimumImbalance(3, intArrayOf(5, 1, 2, 7)))
