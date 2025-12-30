@@ -83,3 +83,24 @@ fun minimumImbalance(jailNumbers: Int, weight: IntArray): Int {
 }
 
 println(minimumImbalance(3, intArrayOf(5, 1, 2, 7)))
+
+fun minimumBottle(lakeSize: Int, bottles: IntArray): Int {
+    var currentWater = lakeSize
+    bottles.sort()
+    var counter = 0
+
+    for (i in bottles.indices) {
+        if (bottles[i] <= currentWater) {
+            currentWater -= bottles[i]
+            counter++
+            continue
+        }
+
+        break
+    }
+
+    return counter
+}
+
+println(minimumBottle(10, intArrayOf(8, 5, 4, 3, 2)))
+println(minimumBottle(10, intArrayOf(6, 3, 2)))
