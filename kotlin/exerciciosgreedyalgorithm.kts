@@ -16,6 +16,7 @@ fun minimumCoins(value: Int, coins: IntArray): Int {
 }
 
 println(minimumCoins(37, intArrayOf(25, 10, 5, 1)))
+println()
 
 data class Task(val start: Int, val end: Int)
 
@@ -48,6 +49,7 @@ println(
         )
     )
 )
+println()
 
 fun minimumImbalance(jailNumbers: Int, weight: IntArray): Int {
     var meanValue = 0
@@ -83,6 +85,7 @@ fun minimumImbalance(jailNumbers: Int, weight: IntArray): Int {
 }
 
 println(minimumImbalance(3, intArrayOf(5, 1, 2, 7)))
+println()
 
 fun minimumBottle(lakeSize: Int, bottles: IntArray): Int {
     var currentWater = lakeSize
@@ -104,3 +107,25 @@ fun minimumBottle(lakeSize: Int, bottles: IntArray): Int {
 
 println(minimumBottle(10, intArrayOf(8, 5, 4, 3, 2)))
 println(minimumBottle(10, intArrayOf(6, 3, 2)))
+println()
+
+fun minimumScarecrows(field: String): Int {
+    var counter = 0
+
+    var currentSpot = 0
+    while (currentSpot in field.indices) {
+        if (field[currentSpot] == '.') {
+            currentSpot += 3
+            counter++
+            continue
+        }
+
+        currentSpot++
+    }
+
+    return counter
+}
+
+println(minimumScarecrows(".#."))
+println(minimumScarecrows("...##....##"))
+println(minimumScarecrows("##"))
