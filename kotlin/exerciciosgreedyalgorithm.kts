@@ -214,8 +214,7 @@ fun numRescueBoats(people: IntArray, limit: Int): Int {
         // cabe apenas o mais pesado
         else if (people[r] <= limit) {
             r--
-        }
-        else {
+        } else {
             l++
         }
         boats++
@@ -227,4 +226,60 @@ fun numRescueBoats(people: IntArray, limit: Int): Int {
 println(numRescueBoats(intArrayOf(1, 2), 3))
 println(numRescueBoats(intArrayOf(3, 2, 2, 1), 3))
 println(numRescueBoats(intArrayOf(3, 5, 3, 4), 5))
+println()
+
+fun maximumReward(people: Array<IntArray>): Int {
+    var reward = 0
+    var time = 0
+
+    people.sortBy { it[0] }
+    for (i in people.indices) {
+        time += people[i].first()
+        reward += people[i][1] - time
+    }
+
+    return reward
+}
+
+println(
+    maximumReward(
+        arrayOf(
+            intArrayOf(6, 10),
+            intArrayOf(8, 15),
+            intArrayOf(5, 12)
+        )
+    )
+)
+println(
+    maximumReward(
+        arrayOf(
+            intArrayOf(3, 47),
+            intArrayOf(5, 11),
+            intArrayOf(1, 70),
+            intArrayOf(2, 100),
+            intArrayOf(2, 41),
+            intArrayOf(2, 66),
+            intArrayOf(5, 80),
+            intArrayOf(4, 84),
+            intArrayOf(5, 81),
+            intArrayOf(5, 40)
+        )
+    )
+)
+println(
+    maximumReward(
+        arrayOf(
+            intArrayOf(80, 55),
+            intArrayOf(29, 46),
+            intArrayOf(58, 5),
+            intArrayOf(92, 80),
+            intArrayOf(62, 68),
+            intArrayOf(64, 20),
+            intArrayOf(78, 56),
+            intArrayOf(41, 66),
+            intArrayOf(62, 44),
+            intArrayOf(32, 80)
+        )
+    )
+)
 println()
