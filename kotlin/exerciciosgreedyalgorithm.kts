@@ -129,7 +129,7 @@ fun minimumScarecrows(field: String): Int {
 println(minimumScarecrows(".#."))
 println(minimumScarecrows("...##....##"))
 println(minimumScarecrows("##"))
-
+println()
 
 fun lemonadeChange(bills: IntArray): Boolean {
     val myBills = mutableMapOf(
@@ -164,3 +164,34 @@ fun lemonadeChange(bills: IntArray): Boolean {
 }
 println(lemonadeChange(intArrayOf(5, 5, 5, 10, 20)))
 println(lemonadeChange(intArrayOf(5, 5, 10, 10, 20)))
+println()
+
+fun minimumRooms(start: IntArray, end: IntArray, n: Int): Int {
+    start.sort()
+    end.sort()
+
+    var i = 0
+    var j = 0
+    var ans = 0
+    var rooms = 0
+
+    // Aloca salas conforme necessário e mantém o máximo que precisamos
+    while (i < n || j < n) {
+        if (i < n && (j == n || start[i] <= end[j])) {
+            i++
+            rooms++
+        } else {
+            j++
+            rooms--
+        }
+
+        ans = maxOf(ans, rooms)
+    }
+
+    return ans
+}
+
+
+println(minimumRooms(intArrayOf(900, 940, 950, 1100, 1500, 1800), intArrayOf(910, 1200, 1120, 1130, 1900, 2000), 6))
+println(minimumRooms(intArrayOf(900, 1100, 1235), intArrayOf(1000, 1200, 1240), 3))
+println()
