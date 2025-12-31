@@ -131,33 +131,36 @@ println(minimumScarecrows("...##....##"))
 println(minimumScarecrows("##"))
 
 
-fun lemonadeChange(bills: IntArray): String {
-    bills.sort()
-    val change = mutableMapOf<Int, Int>()
+fun lemonadeChange(bills: IntArray): Boolean {
+    val myBills = mutableMapOf(
+        5 to 0,
+        10 to 0,
+        20 to 0
+    )
 
-    for (i in bills.indices) {
-        when (bills[i]) {
-            5 -> {
-                change[5] = change.getOrDefault(5, 0) + 1
-                continue
-            }
+    for (bill in bills) {
+        // Adiciona a nota recebida ao nosso controle
+        myBills[bill] = myBills[bill]!! + 1
 
-            10 -> {
-                if (change.getOrDefault(5, 0) == 0) return "Falso"
-                change[5] = change.getOrDefault(5, 0) - 1
-                change[10] = change.getOrDefault(10, 0) + 1
-                continue
-            }
+        var change = bill - 5
 
-            else -> {
-                if (change.getOrDefault(5, 0) == 0) return "Falso"
-                if (change.getOrDefault(10, 0) == 0) return "Falso"
+        // Tentativas de dar o troco, começando com cédulas de maior valor
+        val values = intArrayOf(20, 10, 5)
+        for (value in values) {
+            while (change >= value && myBills[value]!! > 0) {
+                myBills[value] = myBills[value]!! - 1
+                change -= value
             }
+        }
+
+        // Se após tentar dar o troco ainda resta valor, retorna false
+        if (change > 0) {
+            return false
         }
     }
 
-    return "Verdadeiro"
+    // Se foi possível dar o troco em todos os casos, retorna true
+    return true
 }
-
 println(lemonadeChange(intArrayOf(5, 5, 5, 10, 20)))
 println(lemonadeChange(intArrayOf(5, 5, 10, 10, 20)))
