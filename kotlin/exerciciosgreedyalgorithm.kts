@@ -195,3 +195,36 @@ fun minimumRooms(start: IntArray, end: IntArray, n: Int): Int {
 println(minimumRooms(intArrayOf(900, 940, 950, 1100, 1500, 1800), intArrayOf(910, 1200, 1120, 1130, 1900, 2000), 6))
 println(minimumRooms(intArrayOf(900, 1100, 1235), intArrayOf(1000, 1200, 1240), 3))
 println()
+
+
+fun numRescueBoats(people: IntArray, limit: Int): Int {
+    people.sort()
+
+    // Two Pointer
+    var l = 0
+    var r = people.size - 1
+    var boats = 0
+
+    while (l <= r) {
+        // cabem duas pessoas no mesmo barco
+        if (people[l] + people[r] <= limit) {
+            l++
+            r--
+        }
+        // cabe apenas o mais pesado
+        else if (people[r] <= limit) {
+            r--
+        }
+        else {
+            l++
+        }
+        boats++
+    }
+
+    return boats
+}
+
+println(numRescueBoats(intArrayOf(1, 2), 3))
+println(numRescueBoats(intArrayOf(3, 2, 2, 1), 3))
+println(numRescueBoats(intArrayOf(3, 5, 3, 4), 5))
+println()
