@@ -283,3 +283,39 @@ println(
     )
 )
 println()
+
+fun catchThieves(n: Int, k: Int, arr: Array<Char>): Int {
+    var counter = 0
+    var counterChanged = false
+    for (i in arr.indices) {
+        counterChanged = false
+        if (arr[i] == 'T') {
+            var j = i - 1
+            while (j >= 0 && i - j <= k) {
+                if (arr[j] == 'P') {
+                    arr[j] = 'A'
+                    counter++
+                    counterChanged = true
+                    break
+                }
+                j--
+            }
+
+            if (counterChanged) continue
+            j = i + 1
+            while (j < n && j - i <= k) {
+                if (arr[j] == 'P') {
+                    arr[j] = 'A'
+                    counter++
+                    break
+                }
+                j++
+            }
+        }
+    }
+
+    return counter
+}
+
+println(catchThieves(5, 1, arrayOf<Char>('P', 'T', 'T', 'P', 'T')))
+println(catchThieves(6, 2, arrayOf<Char>('T', 'T', 'P', 'P', 'T', 'P')))
