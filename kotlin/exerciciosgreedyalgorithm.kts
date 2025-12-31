@@ -129,3 +129,35 @@ fun minimumScarecrows(field: String): Int {
 println(minimumScarecrows(".#."))
 println(minimumScarecrows("...##....##"))
 println(minimumScarecrows("##"))
+
+
+fun lemonadeChange(bills: IntArray): String {
+    bills.sort()
+    val change = mutableMapOf<Int, Int>()
+
+    for (i in bills.indices) {
+        when (bills[i]) {
+            5 -> {
+                change[5] = change.getOrDefault(5, 0) + 1
+                continue
+            }
+
+            10 -> {
+                if (change.getOrDefault(5, 0) == 0) return "Falso"
+                change[5] = change.getOrDefault(5, 0) - 1
+                change[10] = change.getOrDefault(10, 0) + 1
+                continue
+            }
+
+            else -> {
+                if (change.getOrDefault(5, 0) == 0) return "Falso"
+                if (change.getOrDefault(10, 0) == 0) return "Falso"
+            }
+        }
+    }
+
+    return "Verdadeiro"
+}
+
+println(lemonadeChange(intArrayOf(5, 5, 5, 10, 20)))
+println(lemonadeChange(intArrayOf(5, 5, 10, 10, 20)))
