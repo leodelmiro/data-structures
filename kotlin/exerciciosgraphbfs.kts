@@ -13,8 +13,7 @@ data class Graph(val numVertices: Int) {
         return this.list[vertice]
     }
 
-    fun bfs(vertice: Int) {
-        val alreadyVisited = mutableSetOf<Int>()
+    fun bfs(vertice: Int, alreadyVisited: MutableSet<Int> = mutableSetOf()) {
         val queue: Queue<Int> = LinkedList()
 
         queue.add(vertice)
@@ -30,13 +29,27 @@ data class Graph(val numVertices: Int) {
             }
         }
     }
+
+    fun connectedComponents(): Int {
+        val alreadyVisited = mutableSetOf<Int>()
+        var counter = 0
+
+        for (i in 0 until this.numVertices) {
+            if (i !in alreadyVisited) {
+                this.bfs(i, alreadyVisited)
+                counter++
+            }
+        }
+        return counter
+    }
 }
 
-val graph = Graph(6)
+val graph = Graph(7)
 graph.addEdge(0, 1)
 graph.addEdge(0, 2)
-graph.addEdge(0, 3)
-graph.addEdge(2, 3)
-graph.addEdge(2, 4)
+graph.addEdge(1, 2)
 graph.addEdge(3, 4)
+graph.addEdge(2, 6)
 graph.bfs(0)
+println("--------")
+println("Connected Components: ${graph.connectedComponents()}")
