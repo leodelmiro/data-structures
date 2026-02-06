@@ -81,3 +81,30 @@ class Solution {
         return false
     }
 }
+
+class Solution {
+    fun findCircleNum(isConnected: Array<IntArray>): Int {
+        val n = isConnected.size
+        val visited = BooleanArray(n)
+        var provinces = 0
+
+        fun dfs(city: Int) {
+            for (i in 0 until n) {
+                if (isConnected[city][i] == 1 && !visited[i]) {
+                    visited[i] = true
+                    dfs(i)
+                }
+            }
+        }
+
+        for (i in 0 until n) {
+            if (!visited[i]) {
+                provinces++
+                visited[i] = true
+                dfs(i)
+            }
+        }
+
+        return provinces
+    }
+}
