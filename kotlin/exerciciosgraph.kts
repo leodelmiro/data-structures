@@ -1,3 +1,5 @@
+import java.util.Stack
+
 class Solution {
     fun findJudge(n: Int, trust: Array<IntArray>): Int {
         val trustsIn = mutableMapOf<Int, Int>()
@@ -44,3 +46,38 @@ class Solution1_5 {
 }
 
 println(Solution().findJudge(2, arrayOf(intArrayOf(1, 2))))
+
+class Solution {
+    fun validPath(n: Int, edges: Array<IntArray>, source: Int, destination: Int): Boolean {
+        val adjList = mutableMapOf<Int, MutableList<Int>>()
+        for (i in edges.indices) {
+            val from = edges[i][0]
+            val to = edges[i][1]
+
+            adjList.putIfAbsent(from, mutableListOf())
+            adjList.putIfAbsent(to, mutableListOf())
+
+            adjList[from]!!.add(to)
+            adjList[to]!!.add(from)
+        }
+
+        val visited = mutableSetOf<Int>()
+        visited.add(source)
+        val stack = Stack<Int>()
+        stack.add(source)
+
+        while (stack.isNotEmpty()) {
+            val node = stack.pop()
+            if (node == destination) return true
+
+            for (neighbour in adjList.getOrDefault(node, mutableListOf())) {
+                if (neighbour !in visited) {
+                    visited.add(neighbour)
+                    stack.push(neighbour)
+                }
+            }
+        }
+
+        return false
+    }
+}
