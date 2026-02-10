@@ -192,3 +192,66 @@ class Solution {
     }
 }
 
+class Solution {
+
+    private fun dijkstra(
+        start: Int,
+        numVertices: Int,
+        adjList: Array<MutableList<Pair<Int, Int>>>
+    ): Int {
+        val dist = IntArray(numVertices) { Int.MAX_VALUE }
+        val visited = BooleanArray(numVertices)
+
+        // distância da origem
+        dist[start] = 0
+
+        // processar todos os vértices
+        repeat(numVertices) {
+            var current = -1
+
+            // escolher o vértice não visitado com menor distância
+            for (i in 0 until numVertices) {
+                if (visited[i]) continue
+                if (current == -1 || dist[i] < dist[current]) {
+                    current = i
+                }
+            }
+
+            if (current == -1) return@repeat
+            visited[current] = true
+
+            // relaxar vizinhos
+            for ((neighbor, weight) in adjList[current]) {
+                if (dist[current] != Int.MAX_VALUE &&
+                    dist[current] + weight < dist[neighbor]
+                ) {
+                    dist[neighbor] = dist[current] + weight
+                }
+            }
+        }
+
+        // maior distância mínima
+        var maxMinDist = 0
+        for (d in dist) {
+            if (d == Int.MAX_VALUE) return -1
+            maxMinDist = maxOf(maxMinDist, d)
+        }
+
+        return maxMinDist
+    }
+
+    fun networkDelayTime(times: Array<IntArray>, n: Int, k: Int): Int {
+        val adjList = Array(n) { mutableListOf<Pair<Int, Int>>() }
+
+        for (edge in times) {
+            val u = edge[0] - 1
+            val v = edge[1] - 1
+            val w = edge[2]
+            adjList[u].add(v to w)
+        }
+
+        return dijkstra(k - 1, n, adjList)
+    }
+}
+
+
