@@ -254,4 +254,76 @@ class Solution {
     }
 }
 
+class DisjointSet(n: Int) {
+    private val parent = IntArray(n) { it } // Inicializa todos como pai de si mesmo
+    var components = n
+        private set
+
+    // encontra o representante (root)
+    // entao navega até encontrar alguem que seja pai de si mesmo
+    fun find(x: Int): Int {
+        var cur = x
+        while (parent[cur] != cur) {
+            cur = parent[cur]
+        }
+        return cur
+    }
+
+    // une dois conjuntos
+    fun union(x: Int, y: Int) {
+        val rootX = find(x)
+        val rootY = find(y)
+
+        if (rootX != rootY) {
+            parent[rootY] = rootX
+            components--
+        }
+    }
+}
+
+class SolutionMST_UnionFind {
+
+    fun minimumCost(n: Int, connections: Array<IntArray>): Int {
+
+        // ordenar arestas pelo peso (crescente)
+        val edges = connections.sortedBy { it[2] }
+
+        val disjointSet = DisjointSet(n)
+        var totalWeight = 0
+
+        for (edge in edges) {
+            val u = edge[0] - 1  // ajuste para índice 0-based
+            val v = edge[1] - 1
+            val weight = edge[2]
+
+            if (disjointSet.find(u) != disjointSet.find(v)) {
+                disjointSet.union(u, v)
+                totalWeight += weight
+            }
+        }
+
+        // verificar se todas as cidades estão conectadas
+        return if (disjointSet.components > 1) -1 else totalWeight
+    }
+}
+
+fun main() {
+    val solution = SolutionMST_UnionFind()
+
+    var n = 3
+    var connections = arrayOf(
+        intArrayOf(1, 2, 5),
+        intArrayOf(1, 3, 6),
+        intArrayOf(2, 3, 1)
+    )
+    println(solution.minimumCost(n, connections)) // 6
+
+    n = 4
+    connections = arrayOf(
+        intArrayOf(1, 2, 3),
+        intArrayOf(3, 4, 4)
+    )
+    println(solution.minimumCost(n, connections)) // -1
+}
+
 
