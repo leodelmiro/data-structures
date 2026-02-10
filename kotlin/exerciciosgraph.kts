@@ -1,10 +1,10 @@
-import java.util.Stack
+import java.util.*
 
 class Solution {
     fun findJudge(n: Int, trust: Array<IntArray>): Int {
         val trustsIn = mutableMapOf<Int, Int>()
         val trustedByQuantity = mutableMapOf<Int, Int>()
-        if(trust.isEmpty() && n == 1) return 1
+        if (trust.isEmpty() && n == 1) return 1
 
         for (i in trust.indices) {
             val personTrustsIn = trust[i][1]
@@ -14,7 +14,7 @@ class Solution {
 
         for (i in trustedByQuantity.keys) {
             val trustSomebody = trustsIn.getOrDefault(i, 0)
-            if(trustedByQuantity[i] == n - 1 && trustSomebody == 0) return i
+            if (trustedByQuantity[i] == n - 1 && trustSomebody == 0) return i
         }
 
         return -1
@@ -106,5 +106,50 @@ class Solution {
         }
 
         return provinces
+    }
+}
+
+class Solution {
+    fun canVisitAllRooms(rooms: List<List<Int>>): Boolean {
+        val visited = mutableSetOf<Int>()
+        val queue: Queue<Int> = LinkedList()
+
+        for(i in rooms[0]) {
+            queue.add(i)
+        }
+        visited.add(0)
+
+        while(queue.isNotEmpty()) {
+            val key = queue.poll()
+
+            for(i in rooms[key]) {
+                if (i !in visited) queue.add(i)
+            }
+            visited.add(key)
+        }
+
+        return visited.size == rooms.size
+    }
+}
+
+class Solution2 {
+    fun canVisitAllRooms(rooms: List<List<Int>>): Boolean {
+        val visited = BooleanArray(rooms.size)
+        val queue: ArrayDeque<Int> = ArrayDeque()
+
+        visited[0] = true
+        queue.addLast(0)
+
+        while (queue.isNotEmpty()) {
+            val room = queue.removeFirst()
+            for (key in rooms[room]) {
+                if (!visited[key]) {
+                    visited[key] = true
+                    queue.addLast(key)
+                }
+            }
+        }
+
+        return visited.all { it }
     }
 }
