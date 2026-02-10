@@ -153,3 +153,42 @@ class Solution2 {
         return visited.all { it }
     }
 }
+
+class Solution {
+    fun canFinish(numCourses: Int, prerequisites: Array<IntArray>): Boolean {
+        val graph = Array(numCourses) { mutableListOf<Int>() }
+        val visited = IntArray(numCourses) { 0 }
+        // 0 = unvisited, 1 = visiting, 2 = visited
+
+        // Construir lista de adjacência
+        for (pair in prerequisites) {
+            val course = pair[0]
+            val prereq = pair[1]
+            graph[prereq].add(course)
+        }
+
+        fun dfs(node: Int): Boolean {
+            if (visited[node] == 1) return false   // ciclo detectado
+            if (visited[node] == 2) return true    // já processado
+
+            visited[node] = 1  // marcando como visitando
+
+            for (neighbor in graph[node]) {
+                if (!dfs(neighbor)) return false
+            }
+
+            visited[node] = 2  // processamento completo
+            return true
+        }
+
+        // DFS em todos os cursos
+        for (course in 0 until numCourses) {
+            if (visited[course] == 0) {
+                if (!dfs(course)) return false
+            }
+        }
+
+        return true
+    }
+}
+
