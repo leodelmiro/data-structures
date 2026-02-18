@@ -1,6 +1,7 @@
+import kotlin.math.abs
 import kotlin.math.min
 
-class Solution {
+class Solution1 {
     fun climbStairs(n: Int): Int {
         if (n <= 2) return n
 
@@ -18,7 +19,7 @@ class Solution {
 }
 
 // Solução fazendo o atual + memo do anterior ou do ante penultimo já que pode andar sempre 1 ou 2
-class Solution {
+class Solution2 {
     fun minCostClimbingStairs(cost: IntArray): Int {
         val memo = IntArray(cost.size + 1) { 0 }
         memo[0] = 0
@@ -33,7 +34,7 @@ class Solution {
 }
 
 // Solução fazendo o anterior + memo do anterior ou do ante penultimo + ante penultimo aqui basicamente conta quantos pra chegar no step atual ainda não contabilizando o atual
-class Solution {
+class Solution3 {
     fun minCostClimbingStairs(cost: IntArray): Int {
         val memo = IntArray(cost.size + 1) { 0 }
 
@@ -44,3 +45,25 @@ class Solution {
         return memo[cost.size]
     }
 }
+
+fun minJumpsValue(values: IntArray): Int {
+    val n = values.size
+    val dp = IntArray(n) { 0 }
+
+    for (i in 1 until n) {
+        val jumpOne = dp[i - 1] + abs(values[i] - values[i - 1])
+
+        val jumpTwo = if (i > 1)
+            dp[i - 2] + abs(values[i] - values[i - 2])
+        else
+            Int.MAX_VALUE
+
+        dp[i] = min(jumpOne, jumpTwo)
+    }
+
+    return dp[n - 1]
+}
+
+println(minJumpsValue(intArrayOf(10, 10)))
+println(minJumpsValue(intArrayOf(10, 30, 40, 20)))
+println(minJumpsValue(intArrayOf(30, 10, 60, 10, 60, 50)))
