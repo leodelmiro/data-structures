@@ -1,6 +1,8 @@
+import kotlin.math.min
+
 class Solution {
     fun climbStairs(n: Int): Int {
-        if(n <= 2) return n
+        if (n <= 2) return n
 
         val memo = Array(n + 1) { 0 }
         memo[0] = 0
@@ -12,5 +14,33 @@ class Solution {
         }
 
         return memo[n]
+    }
+}
+
+// Solução fazendo o atual + memo do anterior ou do ante penultimo já que pode andar sempre 1 ou 2
+class Solution {
+    fun minCostClimbingStairs(cost: IntArray): Int {
+        val memo = IntArray(cost.size + 1) { 0 }
+        memo[0] = 0
+        memo[1] = cost[0]
+
+        for (i in 2..cost.size) {
+            memo[i] = min(memo[i - 1] + cost[i - 1], memo[i - 2] + cost[i - 1])
+        }
+
+        return min(memo[memo.size - 1], memo[memo.size - 2])
+    }
+}
+
+// Solução fazendo o anterior + memo do anterior ou do ante penultimo + ante penultimo aqui basicamente conta quantos pra chegar no step atual ainda não contabilizando o atual
+class Solution {
+    fun minCostClimbingStairs(cost: IntArray): Int {
+        val memo = IntArray(cost.size + 1) { 0 }
+
+        for (i in 2..cost.size) {
+            memo[i] = min(memo[i - 1] + cost[i - 1], memo[i - 2] + cost[i - 2])
+        }
+
+        return memo[cost.size]
     }
 }
