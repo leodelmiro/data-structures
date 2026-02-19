@@ -83,3 +83,51 @@ class Solution {
         return if (dp[amount] > amount) -1 else dp[amount]
     }
 }
+
+// Recursiva (Top down)
+class Solution {
+    fun minPathSum(grid: Array<IntArray>): Int {
+        val lastRow = grid.size - 1
+        val dp = Array(grid.size) { IntArray(grid[lastRow].size) { -1 } }
+
+        return recursion(0, 0, grid, dp)
+    }
+
+    private fun recursion(i: Int, j: Int, grid: Array<IntArray>, dp: Array<IntArray>): Int {
+        if(i < 0 || j < 0 || i >= grid.size || j >= grid[0].size) return Int.MAX_VALUE
+        if (i == grid.size - 1 && j == grid[0].size - 1) return grid[i][j]
+        if(dp[i][j] != -1) return dp[i][j]
+
+        dp[i][j] = minOf(recursion(i, j+1, grid, dp), recursion(i+1, j, grid, dp)) + grid[i][j]
+        return dp[i][j]
+    }
+}
+
+// Recursiva (Bottom Up)
+class Solution {
+    fun minPathSum(grid: Array<IntArray>): Int {
+        val m = grid.size
+        val n = grid[0].size
+
+        val dp = Array(m) { IntArray(n) }
+
+        dp[0][0] = grid[0][0]
+
+        // Preenchendo os bases que não tem de onde andar inicialmente que nao seja de cima
+        for (i in 1 until m)
+            dp[i][0] = dp[i - 1][0] + grid[i][0]
+
+        // Preenchendo os bases que não tem de onde andar inicialmente que nao seja da direita
+        for (j in 1 until n)
+            dp[0][j] = dp[0][j - 1] + grid[0][j]
+
+        // Preenchendo demais casos
+        for (i in 1 until m) {
+            for (j in 1 until n) {
+                dp[i][j] = grid[i][j] + minOf(dp[i - 1][j], dp[i][j - 1])
+            }
+        }
+
+        return dp[m - 1][n - 1]
+    }
+}
