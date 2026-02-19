@@ -1,5 +1,4 @@
 import kotlin.math.abs
-import kotlin.math.min
 
 class Solution1 {
     fun climbStairs(n: Int): Int {
@@ -26,10 +25,10 @@ class Solution2 {
         memo[1] = cost[0]
 
         for (i in 2..cost.size) {
-            memo[i] = min(memo[i - 1] + cost[i - 1], memo[i - 2] + cost[i - 1])
+            memo[i] = minOf(memo[i - 1] + cost[i - 1], memo[i - 2] + cost[i - 1])
         }
 
-        return min(memo[memo.size - 1], memo[memo.size - 2])
+        return minOf(memo[memo.size - 1], memo[memo.size - 2])
     }
 }
 
@@ -39,7 +38,7 @@ class Solution3 {
         val memo = IntArray(cost.size + 1) { 0 }
 
         for (i in 2..cost.size) {
-            memo[i] = min(memo[i - 1] + cost[i - 1], memo[i - 2] + cost[i - 2])
+            memo[i] = minOf(memo[i - 1] + cost[i - 1], memo[i - 2] + cost[i - 2])
         }
 
         return memo[cost.size]
@@ -58,7 +57,7 @@ fun minJumpsValue(values: IntArray): Int {
         else
             Int.MAX_VALUE
 
-        dp[i] = min(jumpOne, jumpTwo)
+        dp[i] = minOf(jumpOne, jumpTwo)
     }
 
     return dp[n - 1]
@@ -67,3 +66,20 @@ fun minJumpsValue(values: IntArray): Int {
 println(minJumpsValue(intArrayOf(10, 10)))
 println(minJumpsValue(intArrayOf(10, 30, 40, 20)))
 println(minJumpsValue(intArrayOf(30, 10, 60, 10, 60, 50)))
+
+class Solution {
+    fun coinChange(coins: IntArray, amount: Int): Int {
+        val dp = IntArray(amount + 1) { amount + 1 }
+
+        dp[0] = 0
+        for(i in 1..amount) {
+            for(c in coins) {
+                if(i - c >= 0) {
+                    dp[i] = minOf(dp[i], dp[i - c] + 1)
+                }
+            }
+        }
+
+        return if (dp[amount] > amount) -1 else dp[amount]
+    }
+}
