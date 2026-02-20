@@ -67,7 +67,7 @@ println(minJumpsValue(intArrayOf(10, 10)))
 println(minJumpsValue(intArrayOf(10, 30, 40, 20)))
 println(minJumpsValue(intArrayOf(30, 10, 60, 10, 60, 50)))
 
-class Solution {
+class Solution4 {
     fun coinChange(coins: IntArray, amount: Int): Int {
         val dp = IntArray(amount + 1) { amount + 1 }
 
@@ -85,7 +85,7 @@ class Solution {
 }
 
 // Recursiva (Top down)
-class Solution {
+class Solution5 {
     fun minPathSum(grid: Array<IntArray>): Int {
         val lastRow = grid.size - 1
         val dp = Array(grid.size) { IntArray(grid[lastRow].size) { -1 } }
@@ -104,7 +104,7 @@ class Solution {
 }
 
 // Recursiva (Bottom Up)
-class Solution {
+class Solution6 {
     fun minPathSum(grid: Array<IntArray>): Int {
         val m = grid.size
         val n = grid[0].size
@@ -131,3 +131,21 @@ class Solution {
         return dp[m - 1][n - 1]
     }
 }
+
+fun maxProfit(n: Int, values: IntArray): Int {
+    val dp = IntArray(n + 1) { 0 }
+
+    for(i in 1..n) {
+        for (j in 1..n) {
+            if (i - j >= 0) dp[i] = maxOf(dp[i], dp[i - j] + values[j - 1])
+        }
+    }
+
+    return dp[n]
+}
+
+println("==================")
+println(maxProfit(4, intArrayOf(2, 5, 7, 9)))
+println(maxProfit(8, intArrayOf(1, 5, 8, 9, 10, 17, 17, 20)))
+println(maxProfit(8, intArrayOf(3, 5, 8, 9, 10, 17, 17, 20)))
+println("==================")
