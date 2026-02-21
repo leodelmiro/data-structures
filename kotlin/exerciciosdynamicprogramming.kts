@@ -149,3 +149,25 @@ println(maxProfit(4, intArrayOf(2, 5, 7, 9)))
 println(maxProfit(8, intArrayOf(1, 5, 8, 9, 10, 17, 17, 20)))
 println(maxProfit(8, intArrayOf(3, 5, 8, 9, 10, 17, 17, 20)))
 println("==================")
+
+class Solution {
+    fun canJump(nums: IntArray): Boolean {
+        val n = nums.size
+        if(n == 1) return true
+        if(nums[0] == 0) return false
+
+        val dp = BooleanArray(n)
+
+        dp[0] = true
+        for(i in 1 until n) {
+            for(j in 0..i) {
+                if(dp[j] && nums[j] + j >= i) {
+                    dp[i] = true
+                    break
+                }
+            }
+        }
+
+        return dp[n - 1]
+    }
+}
