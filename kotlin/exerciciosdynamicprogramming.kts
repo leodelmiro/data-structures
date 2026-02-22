@@ -171,3 +171,30 @@ class Solution {
         return dp[n - 1]
     }
 }
+
+class Solution {
+    fun minFallingPathSum(matrix: Array<IntArray>): Int {
+        val row = matrix.size
+        val column = matrix[0].size
+        val dp = Array(column) { IntArray(row) }
+
+        for (i in matrix[0].indices) {
+            dp[0][i] = matrix[0][i]
+        }
+
+        for(i in 1 until row) {
+            for(j in 0 until column) {
+                dp[i][j] = dp[i - 1][j] + matrix[i][j]
+                if(j - 1 >= 0) dp[i][j] = minOf(dp[i - 1][j - 1] + matrix[i][j], dp[i][j])
+                if(j + 1 < column) dp[i][j] = minOf(dp[i - 1][j + 1] + matrix[i][j], dp[i][j])
+            }
+        }
+
+        var minValue = Int.MAX_VALUE
+        for(i in dp[row - 1].indices) {
+            minValue = minOf(minValue, dp[row - 1][i])
+        }
+
+        return minValue
+    }
+}
